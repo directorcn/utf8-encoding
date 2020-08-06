@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTF8Encoding</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        html, body {
+            width: 100%;
+            height: 100%;
+            
+        }
+        .container {
+            width: 100%;
+            height: 500px;
+            padding: 0 30px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        textarea {
+            width: 300px;
+            height: 200px;
+            padding: 8px 14px;
+            resize: none;
+            outline: none;
+            border: 1px solid lightgrey;
+            border-radius: 4px;
+        }
+        .container > div {
+            display: inline-block;
+            transform: translateY(10px);
+        }
+        .container > div > em {
+            display: block;
+            height: 20px;
+            text-align: center;
+            color: darkorange;
+        }
+        .decodeWrapper {
+            width: 300px;
+            height: 200px;
+            border: 1px solid #eeeeee;
+            padding: 8px 14px;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 4px 20px;
+        }
+        footer {
+            display: flex;
+            justify-content: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <textarea placeholder="Input"></textarea>
+        <span>=></span>
+        <div>
+            <textarea placeholder="Output & Enter English characters"></textarea>
+            <em>Hexadecimal</em>
+        </div>
+        <button class="decode">Decode</button>
+        <div class="decodeWrapper"></div>
+    </div>
+    <footer>
+        <button class="reset">Reset</button>
+    </footer>
+    <script src="./UTF8_Encoding.js"></script>
+    <script>
+        const INPUT = document.getElementsByTagName("textarea")[0];
+        const OUTPUT = document.getElementsByTagName("textarea")[1];
+        const DECODEBTN = document.getElementsByClassName("decode")[0];
+        const DECODEWRAPPER = document.getElementsByClassName("decodeWrapper")[0];
+        const RESET = document.getElementsByClassName('reset')[0];
+        let encode = '';
+
+        INPUT.addEventListener("input", () => {
+            fetch(`http://${location.host}/encode?query=${INPUT.value}`)
+                .then(res => {
+                    return res.json()
+                })
+                .then(res => {
+                    encode = res.data.map(it => (+it).toString(16)).join();
+                    OUTPUT.value = encode;
+                })
+        });
+        DECODEBTN.addEventListener("click", () => {
+            if (OUTPUT.value) {
+                fetch(`http://${location.host}/decode?query=${OUTPUT.value}`)
+                    .then(res => {
+                        return res.text();
+                    })
+                    .then(text => {
+                        DECODEWRAPPER.innerHTML = text;
+                    })
+            } else {
+                alert('Please enter English characters')
+            }
+        });
+        RESET.addEventListener('click', () => {
+            INPUT.value = '';
+            OUTPUT.value = '';
+            DECODEWRAPPER.innerHTML = '';
+        })
+
+    </script>
+</body>
+</html>
