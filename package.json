@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "keywords": ["utf-8", "encoding"],
+  "author": "director",
   "license": "ISC",
   "devDependencies": {
     "koa": "^2.13.0",
