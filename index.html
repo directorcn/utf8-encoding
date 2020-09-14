@@ -82,7 +82,7 @@
         const RESET = document.getElementsByClassName('reset')[0];
         let encode = '';
 
-        INPUT.addEventListener("input", () => {
+        INPUT.addEventListener("input", debounce(() => {
             fetch(`http://${location.host}/encode?query=${INPUT.value}`)
                 .then(res => {
                     return res.json()
@@ -91,7 +91,7 @@
                     encode = res.data.map(it => (+it).toString(16)).join();
                     OUTPUT.value = encode;
                 })
-        });
+        }, 1000));
         DECODEBTN.addEventListener("click", () => {
             if (OUTPUT.value) {
                 fetch(`http://${location.host}/decode?query=${OUTPUT.value}`)
@@ -109,7 +109,18 @@
             INPUT.value = '';
             OUTPUT.value = '';
             DECODEWRAPPER.innerHTML = '';
-        })
+        });
+
+        function debounce(fn, delay) {
+            let timer = null;
+            return function() {
+                if (timer) {
+                    clearInterval(timer);
+                    timer = null;
+                }
+                timer = setTimeout(fn, delay);
+            }
+        }
 
     </script>
 </body>
