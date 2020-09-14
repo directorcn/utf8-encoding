@@ -115,7 +115,7 @@
             let timer = null;
             return function() {
                 if (timer) {
-                    clearInterval(timer);
+                    clearTimeout(timer);
                     timer = null;
                 }
                 timer = setTimeout(fn, delay);
