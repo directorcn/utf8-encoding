@@ -114,11 +114,15 @@
         function debounce(fn, delay) {
             let timer = null;
             return function() {
+                const _this = this;
+                const args = arguments;
                 if (timer) {
                     clearTimeout(timer);
                     timer = null;
                 }
-                timer = setTimeout(fn, delay);
+                timer = setTimeout(function() {
+                    fn.apply(_this, args);
+                }, delay);
             }
         }
 
