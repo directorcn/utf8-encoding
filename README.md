@@ -10,4 +10,4 @@ node server.js
 
 * 打开 `localhost:5000` ，即可呈现下图的 UI
 
-![UTF-8 编码](https://raw.githubusercontent.com/directorcn/images/master/utf8-encoding/UTF-8Encoding.gif)
+![UTF-8 编码](https://directorcn.github.io/links/static/images/others/UTF-8Encoding.gif)

@@ -1,9 +1,9 @@
-module.exports = function(string){
+module.exports = function(string) {
     var UTF8 = [];
     var byte = 1;
     var flag = true;
     var chars = string.split('');
-    for (var i = 0; i < chars.length; i++) {
+    for (var i = 0; i < chars.length; i ++) {
         var bit = chars[i].codePointAt().toString(2);
         if (bit.length <= 7) {
             byte = 1;
@@ -11,7 +11,7 @@ module.exports = function(string){
             var len = 7 - bit.length;
             while (len > 0) {
                 bit = '0' + bit;
-                len--;
+                len --;
             }  
         }
         if (bit.length >= 8 && bit.length <= 11) {
@@ -19,7 +19,7 @@ module.exports = function(string){
             var len = 11 - bit.length;
             while (len > 0) {
                 bit = '0' + bit;
-                len--;
+                len --;
             }
         }  
         if (bit.length >= 12 && bit.length <= 16) {
@@ -27,7 +27,7 @@ module.exports = function(string){
             var len = 16 - bit.length;
             while (len > 0) {
                 bit = '0' + bit;
-                len--;
+                len --;
             }
         }
         if (bit.length >= 17 && bit.length <= 21) {
@@ -35,7 +35,7 @@ module.exports = function(string){
             var len = 21 - bit.length;
             while (len > 0) {
                 bit = '0' + bit;
-                len--;
+                len --;
             }
         }
         if (bit.length >= 22 && bit.length <= 26) {
@@ -43,7 +43,7 @@ module.exports = function(string){
             var len = 26 - bit.length;
             while (len > 0) {
                 bit = '0' + bit;
-                len--;
+                len --;
             }
         }
         if (bit.length >= 27 && bit.length <= 31) {
@@ -51,7 +51,7 @@ module.exports = function(string){
             var len = 31 - bit.length;
             while (len > 0) {
                 bit = '0' + bit;
-                len--;
+                len --;
             }
         }
         var base = 5 * (byte - 1);
@@ -68,11 +68,11 @@ module.exports = function(string){
                         isHighest = false;
                     }
                     if (byte > 1) value = '1' + value;
-                    byteNum--;   
+                    byteNum --;   
                 }
                 UTF8.push(binary + value + bit.slice(0, 8 - value.length));
                 flag = false;
-                byte--;
+                byte --;
                 continue;
             }  
             if (byte > 0) {
@@ -80,7 +80,7 @@ module.exports = function(string){
                 UTF8.push(binary + '10' + temp);
             }
             base -= 6;
-            byte--;
+            byte --;
             if (!byte) flag = true;
         }
     }
